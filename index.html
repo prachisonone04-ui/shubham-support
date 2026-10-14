@@ -65,14 +65,14 @@ const programs=[
 {name:"Influence Mastery",fee:9999,rate:7000,tag:"HIGH GROWTH",desc:"Personal influence, organic reach and audience-building strategies.",benefits:["Influence and monetization concepts","Ask about task eligibility","Review cashback conditions in writing","Priority guidance details on request"]},
 {name:"Traffic Mastery",fee:4999,rate:3500,tag:"POPULAR",desc:"Learn audience targeting and organic or paid traffic basics.",benefits:["Traffic generation learning path","Ask how tasks are assigned","Review reward conditions","Step-by-step learning plan"]},
 {name:"Branding Mastery",fee:2499,rate:1750,tag:"STARTER BOOSTER",desc:"Build a memorable personal brand and stronger profile presence.",benefits:["Personal branding fundamentals","Ask about payout conditions","Templates and practice resources","WhatsApp query support"]},
-{name:"Marketing Mastery",fee:999,rate:700,tag:"ENTRY LEVEL",desc:"Beginner-friendly introduction to digital marketing strategy.",benefits:["Digital marketing foundations","Confirm any task limits","Review refund and reward terms","Beginner learning resources"]}
+{name:"Marketing Mastery",fee:999,rate:700,tag:"ENTRY LEVEL",available:false,desc:"Beginner-friendly introduction to digital marketing strategy.",benefits:["Digital marketing foundations","Confirm any task limits","Review refund and reward terms","Beginner learning resources"]}
 ];
 const money=n=>"₹"+Number(n).toLocaleString("en-IN");
 const wa="https://wa.me/918109370770?text="+encodeURIComponent("Hi Shubham Support, please share full program details, terms and refund policy.");
 const cards=document.getElementById("programCards"), select=document.getElementById("programSelect");
 programs.forEach((p,i)=>{
   const card=document.createElement("article");card.className="program"+(i===0?" featured":"");
-  card.innerHTML=`<span class="pill">PROGRAM 0${i+1} · ${p.tag}</span><h3>${p.name}</h3><div class="price">${money(p.fee)} <small>one-time fee*</small></div><p class="desc">${p.desc}</p><div class="metrics"><div><span>Illustrative task rate*</span><strong>${money(p.rate)} / task</strong></div><div><span>Fee</span><strong>${money(p.fee)}</strong></div></div><h4>Before you enroll</h4><ul>${p.benefits.map(b=>`<li>${b}</li>`).join("")}</ul><a class="whatsapp" href="${wa}" target="_blank" rel="noopener">Ask on WhatsApp ↗</a>`;
+  card.innerHTML=`<span class="pill" ${p.available===false?'style="background:#fee2e2;color:#b91c1c"':''}>${p.available===false?'NOT AVAILABLE':`PROGRAM 0${i+1} · ${p.tag}`}</span><h3>${p.name}</h3><div class="price">${money(p.fee)} <small>one-time fee*</small></div><p class="desc">${p.desc}</p><div class="metrics"><div><span>Illustrative task rate*</span><strong>${money(p.rate)} / task</strong></div><div><span>Fee</span><strong>${money(p.fee)}</strong></div></div><h4>Before you enroll</h4><ul>${p.benefits.map(b=>`<li>${b}</li>`).join("")}</ul>${p.available===false?'<span class="whatsapp" style="background:#9ca3af;cursor:not-allowed;box-shadow:none;pointer-events:none">Not Available</span>':`<a class="whatsapp" href="${wa}" target="_blank" rel="noopener">Ask on WhatsApp ↗</a>`}`;
   cards.appendChild(card);
   const opt=document.createElement("option");opt.value=i;opt.textContent=`${p.name} — ${money(p.fee)}`;select.appendChild(opt);
 });
@@ -80,5 +80,3 @@ const tasks=document.getElementById("tasks");
 function update(){const p=programs[Number(select.value)],n=Number(tasks.value);document.getElementById("taskCount").textContent=n;document.getElementById("total").textContent=money(p.rate*n);document.getElementById("rateInfo").textContent=`Listed rate: ${money(p.rate)} per task · Program fee: ${money(p.fee)} (one-time)`;document.getElementById("explain").textContent=`Illustration only: ${n} tasks × ${money(p.rate)}. Task availability, acceptance and payment are not guaranteed; fee is not deducted from this total.`}
 select.addEventListener("change",update);tasks.addEventListener("input",update);update();
 </script>
-</body>
-</html>
